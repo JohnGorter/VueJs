@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        {{msg}}
+        {{ 1 + 1 }}
+        {{ Math.max(1,2,3,4,3,2,1) }}
+        {{ JSON.stringify($data) }}
+        <!-- {{  TestGlobal.toString() }} // does not work -->
+        {{  config.toString() }} <!-- // does not work -->
+    </div>
+    <script>
+
+    let TestGlobal = {
+        toString: function(){
+            console.log("TestGlobal toString");
+        }
+    }
+    TestGlobal.toString();
+
+    var app = new Vue({
+        el:'#app',
+        data: { 
+            msg: 'john',
+            config: {
+                toString: function(){ 
+                    return "config to string";
+                }
+            }
+        }
+    })
+    </script>
+</body>
+</html>

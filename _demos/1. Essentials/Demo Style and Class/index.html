@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <style>
+    .red { color:red}
+    .active { font-size:40px}
+    .active { font-weight:bold}
+
+    </style>
+    <!-- 
+        demo 1. class and style using strings
+        <div id="app" v-bind:class="'red'" v-bind:style="'display:flex;color:red'">
+        {{ message }}
+    </div> -->
+     <!-- 
+        demo 2. using objects 
+        <div id="app" v-bind:class="{ active: isActive }">
+        {{ message }}
+    </div> -->
+    
+       
+        <div id="app" v-bind:class="[activeClass,boldClass]">
+        {{ message }}
+    </div>
+    <script>
+    let app = new Vue({
+        data : {
+            message : "hello world",
+            isActive : true,
+            activeClass:'active',
+            boldClass:'bold'
+        }
+    });
+    app.$mount("#app");
+    </script>
+</body>
+</html>

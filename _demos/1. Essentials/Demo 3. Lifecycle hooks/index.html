@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        {{msg}}
+    </div>
+    <script>
+    var app = new Vue({
+        data: {msg:'hello world'},
+        beforeCreate: function(){
+            console.log("before created");
+        },
+        created: () => console.log("created")
+        ,
+        beforeMount: function(){
+            console.log("before mount");
+
+        },
+        mounted: function(){
+            console.log("mounted");
+        },
+        beforeUpdate: function(){
+            console.log("before update");
+        },
+        updated: function(){
+            console.log("updated");
+        },
+        beforeDestroy: function(){
+            console.log("before destroy");
+        },
+        destroyed: function(){
+            console.log("destroyed");
+        },
+    })
+
+
+    app.$mount('#app');
+
+    </script>
+    <button id="btn">Change msg</button>
+    <script>
+    document.querySelector("#btn").addEventListener("click", () => {
+        app.msg = "test";
+    });
+    </script>
+</body>
+</html>

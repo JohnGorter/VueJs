@@ -12,12 +12,12 @@ Were do we keep state
 
 ---
 ### Pass state 
-To pass state bewtween parent and child
-- use props
-To pass state between siblings
-- use event bus
-To pass state in complex trees
-- use Vuex
+- To pass state bewtween parent and child
+  - use props
+- To pass state between siblings
+  - use event bus
+- To pass state in complex trees
+  - use Vuex
 
 ---
 ### Vue Event Bus

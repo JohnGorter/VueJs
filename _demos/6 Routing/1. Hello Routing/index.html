@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/vue-router"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="main">
+        test {{msg}}
+        <router-link to="/">First</router-link>
+        <router-link to="/second">Second</router-link>
+        <router-view></router-view>
+    </div>
+    <script>
+
+    var router = new VueRouter({
+        routes:[
+            { path:"/", component:{ template:'<h1>Hello Component</h1>'} },
+            { path:"/second", component:{ template:'<h1>Second Component</h1>'} }
+        ]
+    });
+
+    var app = new Vue({
+        router,
+        el:'#main',
+        data:{
+            msg: 'test'
+        }
+    })
+    </script>
+</body>
+</html>

@@ -73,11 +73,139 @@ MyPlugin.install = function (Vue, options) {
 ```
 
 ---
+### Writing Your First Plugin
+A basic plugin that writes to the console every time a component is mounted to the DOM
+
+```js
+// This is your plugin object. It can be exported to be used anywhere.
+const MyPlugin = {
+  // The install method is all that needs to exist on the plugin object.
+  // It takes the global Vue object as well as user-defined options.
+  install(Vue, options) {
+    // We call Vue.mixin() here to inject functionality into all components.
+  	Vue.mixin({
+      // Anything added to a mixin will be injected into all components.
+      // In this case, the mounted() method runs when the component is added to the DOM.
+      mounted() {  console.log('Mounted!'); }
+    });
+  }
+};
+
+export default MyPlugin;
+```
+Plugin can now be used in a Vue app by importing it and calling Vue.use(MyPlugin)
+```js
+import Vue from 'vue'
+import MyPlugin from './my-vue-plugin.js'
+import App from './App.vue'
+
+// The plugin is loaded here.
+Vue.use(MyPlugin)
+new Vue({
+  el: '#app',
+  render: h => h(App)
+});
+```
+
+---
+### Adding Capabilities
+If you wish to package components or directives to be distributed as a plugin, you might write something like this:
+```js
+import MyComponent from './components/MyComponent.vue';
+import MyDirective from './directives/MyDirective.js';
+
+const MyPlugin {
+  install(Vue, options) {
+    Vue.component(MyComponent.name, MyComponent)
+    Vue.directive(MyDirective.name, MyDirective)
+  }
+};
+
+export default MyPlugin;
+```
+
+---
+### Modifying the Global Vue Object
+You can modify the global Vue object from a plugin pretty much how you’d expect:
+
+```js
+const MyPlugin {
+  install(Vue, options) {
+    Vue.myAddedProperty = 'Example Property'
+    Vue.myAddedMethod = function() {
+      return Vue.myAddedProperty
+    }
+  }
+};
+
+export default MyPlugin;
+```
+
+---
+### Modifying Vue Instances
+To add a property or method directly to component instances without any injection mechanism, you can modify the Vue prototype as shown here
+```js
+const MyPlugin {
+  install(Vue, options) {
+    Vue.prototype.$myAddedProperty = 'Example Property'
+    Vue.prototype.$myAddedMethod = function() {
+      return this.$myAddedProperty
+    }
+  }
+};
+
+export default MyPlugin;
+```
+* properties will now be added to all components and Vue instances.
+* Within the Vue community, it is generally expected that plugins which modify the Vue prototype prefix any added properties with a dollar sign ($).
+
+---
+### Adding component lifecycle hooks or properties.
+You can add lifecycle hooks and make other modifications to Vue components by using a Mixin
+```js
+const MyPlugin = {
+  install(Vue, options) {
+    Vue.mixin({
+      mounted() {
+        console.log('Mounted!');
+      }
+    });
+  }
+};
+
+export default MyPlugin;
+```
+
+- Mixins are essentially component definitions that get combined into (mixed in) other components.
+
+---
+### Automatic Installation
+For people who use your plugin outside of a module system, it is often expected that if your plugin is included after the Vue script tag, that it will automatically install itself without the need to call Vue.use(). 
+
+You can implement this by 
+```js
+// Automatic installation if Vue has been added to the global scope.
+if (typeof window !== 'undefined' && window.Vue) {
+  window.Vue.use(MyPlugin)
+}
+```
+
+---
+### Distributing your Plugin
+Once you’ve written a plugin and are ready to distribute it to the community, here are some common steps for helping people discover your plugin if you’re not already familiar with the process.
+
+- Publish the source code and distributable files to NPM and GitHub. 
+  - Make sure you choose a fitting license for your code!
+- Open a pull request to the official Vue cool-stuff-discovery repository: Awesome-Vue. 
+  - Lots of people come here to look for plugins.
+- (Optional) Post about it on the Vue Forum, Vue Gitter Channel and on Twitter with the hashtag #vuejs.
+
+
+---
 <!-- .slide: data-background="url('images/demo.jpg')" data-background-size="cover" --> 
 <!-- .slide: class="lab" -->
 ## Demo time!
 Writing a plugin
-
 
 
 
